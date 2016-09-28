@@ -1,0 +1,54 @@
+
+Ympäristön asennusohjeet
+
+Tee tässä ohjeessa pyydetyt asiat ennen dojoon tuloa. Näin pääsemme heti asiaa, eikä aika kulu työkalujen asentamiseen. Ohjeet pyrkivät johtamaan ghc 8.0.1:n asentamiseen, mutta tarkalla versiolla ei ole tässä tapauksessa juuri merkitystä, 7.8 ja 7.10 sarja käyvät myös.
+
+LINUX:
+======
+
+Lähes kaikista linuxeista löytyy sopiva ghc tai haskell-ympäristö paketinhallinnasta valmiina (huom. ei rasbian). Yleenä ne löytyvät nimillä "ghc" ja "haskell-platform".
+
+* debian / ubuntu / mint
+ * apt-get install ghc
+ * tai apt-get install haskell-platform
+* Red Hat 
+ * yum install haskell-platform
+* Arch linux
+ * pacman -S ghc
+
+
+macOS / OS X:
+=============
+* Jos käytät homebrew:tä asenna paketti ghc
+* Muussa tapauksessa seuraa ohjeita sivulla https://www.haskell.org/platform/mac.html
+ * Minimal-installer riittää tämän dojon tarpeisiin
+
+
+Windows:
+========
+* Windows-käyttäjä pääsee vähimmällä kun asentaa haskell-platformin osoitteesta: https://www.haskell.org/platform/windows.html
+* Lataa käyttöjärjestelmäsi bittisyyden mukainen paketti (vieläkö jollain on muka 32-bittinen..)
+ * Minimal riittää tämän dojon tarpeisiin
+ * Seuraa ohjeita
+
+
+Kaikki käyttöjärjestelmät:
+==========================
+Savutesti asennuksen onnistumiseen:
+* avaa konsoli
+* kirjoita ghci
+* versiotiedon jälkeen pitäisi näkyä "Prelude> "
+* Sammuta repl painamalla ctrl-d tai komentamalla :q
+
+
+Konffaa oma suosikkieditorisi tukemaan haskellia
+* Emacs: Haskell-mode
+* Atom: 
+ * language-haskell = syntaksikorostus
+ * haskell-ide = enemmän toimintoja, tässä dojossa ei hyötä edelliseen verrattuna
+* Sublime text: tukee syntaksikorostusta vakiona
+* Notepad++ tukee suoraan
+
+
+
+
