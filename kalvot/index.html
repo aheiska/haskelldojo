@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Ensikosketus funktionaaliseen ohjelmointiin</title>
+
+		<meta name="description" content="Funktionaalisen ohjelmoinnin perusteita vahvasti tyypitetyillä kielillä">
+		<meta name="author" content="(Anssi Heiska, Tuomas Peltola)">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Ensikosketus funktionaaliseen ohjelmointiin</h1>
+					<h3>(vahvasti tyypitettynä)</h3>
+				</section>
+
+				<section>
+					<h2>Sisältö</h2>
+					<ul>
+						<li>Esittely</li>
+						<li>Johdanto</li>
+						<li>Teoria</li>
+						<li>Koodaustehtävät</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Esittely</h2>
+					<p>
+						<a href="http://bitwise.fi/">Bitwise</a> on laaja-alainen ohjelmistotalo Viinikanojan kupeessa.
+					</p>
+					<p>
+						<a href="https://twitter.com/aheiska">Anssi Heiska.</a> Tyypitetty fp on ihanaa &lt;3. Monadi on vain sellainen
+						Functor jolla aloittelijoita yleensä pelotellaan :).
+						<blockquote>If it compiles. It works.</blockquote>
+					</p>
+					<p>
+						<a href="https://twitter.com/FullMetalCoder">Tuomas Peltola</a>
+						koki funktionaalisen valaistumisen 2008 Groovylla.
+						Vuosien käyttö on vaatinut siirtymisen yhä kovempiin aineisiin,
+						mutta monadit ovat edelleen hyödyttömiä.
+					</p>
+				</section>
+
+				<section>
+					<h2>Miksi funktionaalinen ohjelmointi?</h2>
+					<p>
+						Funktionaalisia piirteitä on tullut kaikkiin merkittäviin ohjelmointikieliin.
+					</p>
+					<p>
+						Funktionaalisuus voi auttaa ratkaisemaan joitain ongelmia paremmin
+						nostamalla abstraktiotasoa ja yksinkertaistamalla rinnakkaisuutta.
+						Tämä pätee, vaikka käytössä olisi imperatiivinen ohjelmointikieli!
+					</p>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Funktionaalisen ja imperatiivisen ero</h2>
+					<p>
+						Funktionaalisessa ohjelmoinnissa funktiot ovat ensimmäisen luokan kansalaisia.
+						Erityisen oleellisia ovat korkeamman kertaluokan funktiot; funktiot, jotka ottavat funktion parametrina.
+						Tai palauttavat uuden funktion. Tai molempia.
+					</p>
+					<p>
+						Imperatiivisen ohjelmoinnin peruskäsitteitä,
+						muuttuvia muuttujia tai silmukoja,
+						ei ole funktionaalisessa ohjelmoinnissa. Käytetyt tietorakenteetkin
+						ovat (käytännössä aina) muuttumattomia.
+					</p>
+				</section>
+
+				<section>
+					<h2>Funktiot ensimmäisen luokan kansalaisina</h2>
+					<p>
+						Funktioita voidaan ohjelmakoodissa käsitellä kuten dataa. Niitä voidaan
+						välittää parametreina, palauttaa funktioista ja sijoittaa muuttujiin kuten arvojakin.
+					</p>
+			  </section>
+
+				<section>
+					<h2>Funktiot ensimmäisen luokan kansalaisina</h2>
+					<h5>Scala</h5>
+					<pre><code class="scala" data-trim contenteditable>
+def laske(oper: (Int, Int) => Int, l: Int, r: Int) = oper(l, r)
+					</code></pre>
+					<h5>Haskell</h5>
+					<pre><code class="haskell" data-trim contenteditable>
+laske :: (Int -> Int -> Int) -> Int -> Int -> Int
+laske oper l r = oper l r
+					</code></pre>
+					<h5>F#</h5>
+					<pre><code class="f#" data-trim contenteditable>
+let laske oper l r = oper l r
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Lambda ja sulkeuma (closure)</h2>
+					<p>
+						Lambda on anonyymi funktio, joka annetaan esimerkiksi parametrina toiselle funktiolle.
+						Sulkeuma on lambda, joka voi viitata kontekstinsa muuttujiin. Käytännössä ohjelmointikieliä
+						joissa olisi lamdat mutta ei sulkeumia ei ole. Voidaan siis sanoa, että lambda on sulkeuma
+						silloin kun se viittaa kontekstiinsa.
+					</p>
+				</section>
+
+				<section>
+					<h3>Teoriaa: Lambdat koodissa</h3>
+					<h5>Scala</h5>
+					<pre><code class="scala" data-trim contenteditable>
+val x = 2
+laske((l, r) => x * l + r, 3, 5)
+					</code></pre>
+					<h5>Haskell</h5>
+					<pre><code data-trim contenteditable>
+x = 2
+laske (\l r -> x * l + r) 3 5
+					</code></pre>
+					<h5>F#</h5>
+					<pre><code data-trim contenteditable>
+let x = 2
+laske (fun l r -> x * l + r) 3 5
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Immutable lista</h2>
+					<p>
+						Muuttumaton (linkitetty) lista, joka koostuu rekursiivisesti
+						päästä (head) ja hännästä (tail). Pää on alkio ja häntä on uusi,
+						yhden lyhyempi lista.
+					</p>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Listan määrittely</h2>
+					<h5>Scala</h5>
+					<pre><code class="scala" data-trim contenteditable>
+sealed trait List[+T]
+case object Nil extends List[Nothing]
+case class Cons[+T](head: T, tail: List[T]) extends List[T]
+					</code></pre>
+					<h5>Haskell</h5>
+					<pre><code class="haskell" data-trim contenteditable>
+data List a = Nil | Cons a (List a)
+					</code></pre>
+					<h5>F#</h5>
+					<pre><code class="F#" data-trim contenteditable>
+type List<'a> = Nil | Cons of 'a * List<'a>
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Teoriaa: Listat koodissa</h3>
+					<h5>Scala</h5>
+					<pre><code class="scala" data-trim contenteditable>
+List(1, 2, 3)
+> 1 :: 2 :: 3 :: Nil
+					</code></pre>
+					<h5>Haskell</h5>
+					<pre><code class="haskell" data-trim contenteditable>
+[1, 2, 3]
+> 1 : 2 : 3 : []
+					</code></pre>
+					<h5>F#</h5>
+					<pre><code class="F#" data-trim contenteditable>
+[1; 2; 3]
+> 1 :: 2 :: 3 :: []
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Hahmontunnistus (pattern matching)</h2>
+					<p>
+						Switch-case steroideilla. Samaan aikaan testataan ehtoa ja puretaan arvo muuttujiin.
+						Samassa siis sekä if että sijoitus.
+					</p>
+				</section>
+
+				<section>
+					<h3>Teoriaa: Hahmontunnistus koodissa</h3>
+					<h5>Scala</h5>
+					<pre><code class="scala" data-trim contenteditable>
+def id[T](list: List[T]): List[T] = list match {
+  case Nil => Nil
+  case head :: tail => head :: id(tail)
+}
+					</code></pre>
+					<h5>Haskell</h5>
+					<pre><code class="haskell" data-trim contenteditable>
+id [] = []
+id (head : tail) = head : id tail
+					</code></pre>
+					<h5>F#</h5>
+					<pre><code class="f#" data-trim contenteditable>
+let rec id list =
+    match list with
+    | [] -> []
+    | head :: tail -> head :: id tail
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Teoriaa: Ei lauseita (statement)</h3>
+					<p>
+						Funktionaalisissa kielissä on hyvin vähän (tai ei lainkaan) lauseita,
+						vaan koodi muodostuu lausekkeista (expression). Esimerkiksi if palauttaa
+						aina arvon.
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+val z = if (x > y) x else y
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+let z = if x > y then x else y
+					</code></pre>
+					<pre><code class="F#" data-trim contenteditable>
+let z = if x > y then x else y
+					</code></pre>
+				</section>
+
+				<section>
+					<h4>Teoriaa: Miten ohjelmoidaan funktionaalisesti?</h4>
+					<h5>- Rekursiolla!</h5>
+					<p>
+						Jotta voit ymmärtää rekursion, sinun on ymmärrettävä rekursio.
+					</p>
+					<p>
+						Vaikka rekursiota käytetään harvoin käytännössä suoraan, funktionaalinen
+						ohjelmointi perustuu silti usein rekursioon sekä tietorakenteissa että algoritmeissa.
+					</p>
+				</section>
+
+				<section>
+					<h3>Tehtävä 1</h3>
+					<p>
+						Halutaan muuttaa listan sisältö toiseksi. Esimerkiksi lisätään
+						jokaiseen listan alkioon yksi?
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def add1(l: List[Int]) : List[Int] = l match {
+  case Nil    => Nil
+  case h :: t => h + 1 :: add1(t)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+add1 :: [Int] -> [Integer]
+add1 []       = []
+add1 (x : xs) = x+1 : add1 xs
+					</code></pre>
+					<pre><code class="F#" data-trim contenteditable>
+let rec add1 xs =
+    match xs with
+    | []     -> []
+    | h :: t -> h+1 :: add1 t
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 1</h3>
+					<p>
+						Kirjoita funktio joka:
+					</p>
+					<ol>
+						<li>Kertoo jokaisen listan alkion kahdella</li>
+						<li>Ottaa jokaisen listan alkion (merkkijono) pituuden uuteen listaan</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Tehtävä 1</h3>
+					<p>
+						Käytännössä sama koodi kaikissa! Mitä eroja niissä on?
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def double(l: List[Int]) : List[Int] = l match {
+	case Nil    => Nil
+	case h :: t => h+h :: double(t)
+}
+
+def lens(l: List[String]) : List[Int] = l match {
+	case Nil    => Nil
+	case h :: t => h.size :: lens(t)
+}
+					</code></pre>
+					<p>
+						Toteuta funktio <b>map</b>, joka abstrahoi kaiken muun paitsi eroavan osuuden.
+					</p>
+				</section>
+
+				<section>
+					<h3>Tehtävä 1: Ratkaisu</h3>
+					<pre><code class="scala" data-trim contenteditable>
+def map[T,V](l: List[T])(f: T => V) : List[V] = l match {
+  case Nil    => Nil
+  case h :: t => f(h) :: map(t)(f)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+map' :: (a -> b) -> [a] -> [b]
+map' _ []       = []
+map' f (x : xs) = f x : map' f xs
+					</code></pre>
+					<pre><code class="F#" data-trim contenteditable>
+let rec map' xs f =
+    match xs with
+    | []     -> []
+    | h :: t -> f h :: map' t f
+					</code></pre>
+				</section>
+
+
+
+
+				<section>
+					<h3>Tehtävä 2</h3>
+					<p>
+						Halutaan listasta vain jotkut alkiot. Esimerkiksi kaikki alle viiden
+						suuruiset?
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def alle5(l: List[Int]): List[Int] = l match {
+  case Nil    => Nil
+  case h :: t => if (h < 5) h :: alle5(t) else alle5(t)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+alle5 :: [Int] -> [Int]
+alle5 []       = []
+alle5 (x : xs) = if x < 5 then x : alle5 xs else alle5 xs
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec alle5 xs =
+    match xs with
+    | []     -> []
+    | h :: t -> if h < 5 then h :: alle5 t else alle5 t
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 2</h3>
+					<ol>
+						<li>Vain parilliset luvut</li>
+						<li>Vain ne joiden ensimmäinen jäsen (tuple) on positiivinen</li>
+						<li>Bonus: ne joiden indeksi on parillinen</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Tehtävä 2</h3>
+					<p>
+						Taas ovat melko samanlaista keskenään.
+					</p>
+
+					<pre><code class="scala" data-trim contenteditable>
+def parilliset(l: List[Int]) : List[Int] = l match {
+  case Nil    => Nil
+  case h :: t =>
+    if (h % 2 == 0)
+      h :: parilliset(t)
+    else
+      parilliset(t)
+}
+
+def posFst(l: List[(Int, String)]): List[(Int, string)] = l match {
+  case Nil                   => Nil
+  case (i, s) :: t  if i > 0 => (i, s) :: posFst(t)
+  case h :: t                => posFst(t)
+}
+					</code></pre>
+					<p>
+						Toteuta korkeamman kertaluvun funktio <b>filter</b> joka
+						abstrahoi edelliset.
+					</p>
+				</section>
+
+				<section>
+					<pre><code class="scala" data-trim contenteditable>
+def parillisetIndeksit(l: List[Int]) : List[Int] = {
+	def pi(l: List[Int], i: Int) : List[Int] = (l, i) match {
+		case (Nil, _)                  => Nil
+		case (h :: t, i) if i % 2 == 0 => h :: pi(t, i+1)
+		case (h :: t, i)               => pi(t, i+1)
+	}
+	pi(l, 0)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+// haskell
+evenIndex'' :: [a] -> [a]
+evenIndex'' xs = [x | (x, i) <- zip xs [0..], i `mod` 2 == 0]
+					</code></pre>
+
+					<pre><code class="f#" data-trim contenteditable>
+let parillisetIndeksit xs =
+  [for (x,i) in List.zip xs [0 .. List.length xs] do
+	  if i % 2 = 0 then yield x]
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 2: Ratkaisu</h3>
+					<pre><code class="scala" data-trim contenteditable>
+def filter[T](l: List[T], f: T => Boolean) : List[T] = l match {
+  case Nil            => Nil
+  case h :: t if f(h) => h :: filter(t, f)
+  case _ :: t         => filter(t, f)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x : xs)
+  | f x       = x : filter' f xs
+  | otherwise = filter' f xs
+
+filter'' f xs = [x | x <- xs, f x]
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec filter f xs =
+    match xs with
+    | []              -> []
+    | h :: t when f h -> h :: filter f t
+    | _ :: t          -> filter f t
+
+let filter' f xs = [for x in xs do if f x then yield x]
+					</code></pre>
+				</section>
+
+
+
+				<section>
+					<h3>Tehtävä 3</h3>
+					<p>
+						Halutaan redusoida lista yhdeksi arvoksi. Esimerkiksi listan kaikkien
+						alkioiden summa?
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def sum(l: List[Int]) : Int = l match {
+  case Nil    => 0
+  case h :: t => h + sum(t)
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+sum' :: [Integer] -> Integer
+sum' []      = 0
+sum' (h : t) = h + (sum t)
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec sum xs =
+    match xs with
+    | []    -> 0
+    | y::ys -> y + sum ys
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 3</h3>
+					<ol>
+						<li>Kaikkien alkioiden tulo</li>
+						<li>Kaikki alkiot (merkkijonot) katenoituna yhteen merkkijonoon</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Tehtävä 3</h3>
+					<p>
+						Käytännössä sama koodi kaikissa! Mitä eroja niissä on?
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def sum(l: List[Int]) : Int = l match {
+  case Nil    => 0
+  case h :: t => h + sum(t)
+}
+
+def product(l: List[Int]) : Int = l match {
+  case Nil    => 1
+  case h :: t => h * product(t)
+}
+
+def cat(l: List[String]) : String = l match {
+  case Nil    => ""
+  case h :: t => h ++ cat(t)
+}
+					</code></pre>
+					<p>
+						Toteuta funktio reduce, joka abstrahoi kaiken muun paitsi eroavan osuuden.
+					</p>
+				</section>
+
+				<section>
+					<h3>Tehtävä 3: Ratkaisu</h3>
+					<pre><code class="scala" data-trim contenteditable>
+def reduce[T](l: List[T], z: T)(f: (T, T) => T) : T = l match {
+  case Nil    => z
+  case h :: t => f(h, reduce(t, z)(f))
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+reduce :: (a -> a -> a) -> a -> [a] -> a
+reduce f z []      = z
+reduce f z (h : t) = f h (reduce f z t)
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec reduce' f z xs =
+    match xs with
+    | []      -> z
+    | y :: ys -> f y (reduce' f z ys)
+					</code></pre>
+				</section>
+
+
+
+				<section>
+					<h3>Tehtävä 4</h3>
+					<p>
+						Itseasiassa nämä kolmekin ovat selvästi samanlaisia.
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def reduce[T](l: List[T], f: (T, T) => T, z: T) : T = l match {
+	case Nil    => z
+	case h :: t => f(h, reduce(t, f, z))
+}
+
+def map[T,V](l: List[T], f: T => V) : List[V] = l match {
+	case Nil    => Nil
+	case h :: t => f(h) :: map(t, f)
+}
+
+def filter[T](l: List[T], f: T => Boolean) : List[T] = l match {
+	case Nil    => Nil
+	case h :: t => if f(h) h :: filter(t, f) else filter(t, f)
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 4</h3>
+					<p>
+						Toteuta rekursiivinen funktio fold, joka yhdistää reducen, mapin ja filterin.
+					</p>
+					<pre><code class="scala" data-trim contenteditable>
+def fold[T, V](l: List[T], f: (T, V) => V, z: V) : V = ???
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+fold :: [a] -> (a -> b -> b) -> b -> b
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec fold (l : 'a list) (f : 'a -> 'b -> 'b) (z : 'b) =
+	failwith "Not implemented"
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 4: Ratkaisu</h3>
+					<pre><code class="scala" data-trim contenteditable>
+def fold[T, V](l: List[T], f: (T, V) => V, z: V) : V = l match {
+  case Nil    => z
+  case h :: t => f(h, fold(t, f, z))
+}
+					</code></pre>
+					<pre><code class="haskell" data-trim contenteditable>
+fold :: [a] -> (a -> b -> b) -> b -> b
+fold [] _ z       = z
+fold (x : xs) f z = f x (fold xs f z)
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec fold l f z =
+    match l with
+    | []     -> z
+    | h :: t -> f h (fold t f z)
+					</code></pre>
+					<p>
+						Nämä ovat oikeasti funktio nimeltään fold right.
+						Eroon fold left funktion kanssa ei mennä tässä.
+					</p>
+				</section>
+
+				<section>
+					<h3>Fold, huomiot</h3>
+					<blockquote>fold on listan rekursion yleistys!</blockquote>
+					<p>
+						Oikeastaan mappiä, filteriä jne ei tarvittaisi kunhan fold on saatavilla. Tosin
+						on paljon mukavampi kirjoittaa <code>map (+1) lista</code> kuin vastaava foldilla
+						<!-- <code>foldr (\x acc -> x + 1 : acc) [] lista</code> -->
+					</p>
+				</section>
+
+				<section>
+					<h3>Tehtävä 5</h3>
+					<ol>
+						<li>Toteuta reduce käyttäen foldia</li>
+						<li>Toteuta map käyttäen foldia</li>
+						<li>Toteuta filter käyttäen foldia</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Tehtävä 5: Ratkaisu, Scala</h3>
+					<pre><code class="scala" data-trim contenteditable>
+def reducef[T](l: List[T])(f: (T, T) => T) =
+  fold(l.tail, l.head)(f)
+
+def mapf[T, V](l: List[T])(f: T => V) =
+  fold(l, List[V]()) { (v, l) => f(v) :: l }
+
+def filterf[T](l: List[T])(f: T => Boolean) =
+  fold(l, List[T]()) { (v, l) =>
+    if (f(v)) v :: l else l
+  }
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Tehtävä 5: Ratkaisu, Haskell</h3>
+					<pre><code class="scala" data-trim contenteditable>
+mapf :: (a -> b) -> [a] -> [b]
+mapf f xs = foldr' (\x acc -> f x : acc) ([] :: [b]) xs
+
+reducef :: (a -> a -> a) -> [a] -> a
+reducef f (x : xs) = foldr' f x xs
+
+filterf :: (a -> Bool) -> [a] -> [a]
+filterf f xs = foldr' lf ([] :: [a]) xs where
+  lf x acc
+    | f x       = x : acc
+    | otherwise = acc
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>
+						Bonustehtävät:
+					</h3>
+					<ol>
+						<li>IBAN-numeron validointi</li>
+						<li>Viitenumeron tarkastussumman laskenta</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Lopuksi</h3>
+					<p>
+						Nämä asiat on tärkeä ymmärtää, koska niin moni asia palautuu
+						listan käsittelyyn. Uskomme myös vahvaan näppituntumaan, kun asian on
+						kerran kirjoittanut sen myös oppii hyvin.
+						(Programming is not a specatator sport)
+					</p>
+					<blockquote>
+						Steps to becoming a great (Haskell) programmer:<br />
+						1.) Pick a problem.<br />
+						2.) Write a solution with (Haskell) (any|every) way you can.<br />
+						3.) Repeat.
+					</blockquote>
+				</section>
+
+				<section>
+					<h3>Kotitehtäviä</h3>
+					<ol>
+						<li>Kalvot: <a href="https://github.com/aheiska/shf">https://github.com/aheiska/shf</a></li>
+						<li><a href="http://aperiodic.net/phil/scala/s-99/">99 ongelmaa</a></li>
+						<li><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good!</a></li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Kysyttävää?</h3>
+				</section>
+
+				<section>
+					<h7>Nil</h7>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
