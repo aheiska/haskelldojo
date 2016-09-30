@@ -43,9 +43,7 @@ Savutesti asennuksen onnistumiseen:
 
 Konffaa oma suosikkieditorisi tukemaan haskellia
 * Emacs: Haskell-mode
-* Atom: 
- * language-haskell = syntaksikorostus
- * haskell-ide = enemmän toimintoja, tässä dojossa ei hyötä edelliseen verrattuna
+* Atom: language-haskell
 * Sublime text: tukee syntaksikorostusta vakiona
 * Notepad++ tukee suoraan
 

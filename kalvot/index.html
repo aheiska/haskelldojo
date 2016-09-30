@@ -43,6 +43,7 @@
 				<section>
 					<h1>Ensikosketus funktionaaliseen ohjelmointiin</h1>
 					<h3>(vahvasti tyypitettynä)</h3>
+					<h5>Alias mikä ihme on korkeamman kertaluvun funktio.</h5>
 				</section>
 
 				<section>
@@ -97,19 +98,26 @@
 						ei ole funktionaalisessa ohjelmoinnissa. Käytetyt tietorakenteetkin
 						ovat (käytännössä aina) muuttumattomia.
 					</p>
+				</section>
+
+				<section>
+					<h2>Teoriaa: Funktionaalisen ja imperatiivisen ero</h2>
 					<p>
 						Funktionaalisella ohjelmointikiellä kirjoitetulle ohjelmalle on tyypillistä sen deklaratiivisyys.
 						Ohjelma kertoo siis tietokoneelle ennemminkin "mitä tehdään" (fp) kuin "miten tehdään" (imperatiivinen). 
 						Ero saattaa tässä vaiheessa tuntua pieneltä, merkityksettömältä tai vaikealta ymmärtää, mutta paradigman
 						kauneus aukeaa vähitellen (tuskin kylläkään tämän dojon aikana).
 					</p>
+					<!-- Tänään todennäköisesti aivoihin vähän sattuu, mutta se on hyvä -->
 				</section>
+
 
 				<section>
 					<h2>Miksi Haskell?</h2>
 					<p>
 						Haskell on nykyisistä funktionaalisista ohjelmointikielistä yksi
-						eniten käytetyistä ja vahvimmin tyypitetyistä. 
+						eniten käytetyistä ja vahvimmin tyypitetyistä. Lisäksi on haskell on puhdas, 
+						eikä salli sivuvaikutuksia.
 					</p>
 					<p>
 						Haskell-kielen ylivoimaisesti suosituin totetus on tällä hetkellä ghc (Glasgow Haskell Compiler). Haskell siis 
@@ -117,8 +125,8 @@
 						nopeampi kuin käsin kirjoitettu C tai C++. 
 					</p>
 					<p>
-						Tässä dojossa emme kuitenkaan käännä ohjelmiamme binääriksi vaan käytänne haskell tulkkia ghci
-						(eli REPL:iä (Read-Evan-Print-Loop)).
+						Tässä dojossa emme kuitenkaan käännä ohjelmiamme binääriksi vaan käytänne haskell tulkkia <code>ghci</code>.
+						<!-- eli REPL:iä (Read-Evan-Print-Loop) -->
 					</p>
 				</section>
 
@@ -127,10 +135,10 @@
 					<p>
 						FP-kieli itsessään on hieman ontuva termi. Kaikilla kielillä voi ohjelmoida funktionaalisesti. FP-kieliksi 
 						tyypillisesti kuitenkin nimitetään sellaisia ohjelmointikieliä jotka tekevät funktionaalisen ohjelmoinnin 
-						helpoksi ja joiden kehitysprosessissa ja standardikirjastossa funktionaalisuus on ollut aina mukana.
+						helpoksi, ja joiden kehitysprosessissa ja standardikirjastossa funktionaalisuus on ollut aina mukana.
 					</p>
 					<p>
-						Ocaml, Scala, F#, Erlang, Clojure, 
+						Ocaml, Scala, F#, Erlang, Clojure, Scheme, SML, Frege, Idris, Elm, Rust...
 					</p>
 				</section>
 
@@ -238,7 +246,7 @@ List(1, 2, 3)
 					<h2>Teoriaa: Hahmontunnistus (pattern matching)</h2>
 					<p>
 						Switch-case steroideilla. Samaan aikaan testataan ehtoa ja puretaan arvo muuttujiin.
-						Samassa siis sekä if että sijoitus.
+						Samassa siis sekä if/case että sijoitus.
 					</p>
 				</section>
 
@@ -299,11 +307,20 @@ let z = if x > y then x else y
 					<h4>Ennen tehtäviä</h4>
 					<p>
 						Tällä kertaa tehtävien tarkoitus on tutustuttaa tekijä korkeamman kertaluvun funktioihin "keksimällä ne itse".
-						Samoin on tarkoitus huomata, että vaikka Haskell ja FP maailma vilisee pelottavia termejä kuten Monadi,
-						Monoidi, CoFree, FixPoit, Yoneda, Applicative, Functor, Semigroup jne ei kaikkea tarvitse tietää heti vaan ohjelmoinnin 
-						voi aloittaa ihan perusteista.
+					</p>
+					<p>
+						Samoin on tarkoitus huomata, että vaikka Haskell ja FP-maailma vilisee pelottavia termejä kuten Monadi,
+						Monoidi, CoFree, FixPoint, Yoneda, Applicative, Functor, Semigroup, Currying, Partial Application jne ei
+						kaikkea tarvitse tietää heti vaan ohjelmoinnin 
+						voi aloittaa ihan perusteista. (Yleensä hienon nimen takana on aika yksinkertainen asia, jolle on vain
+						annettu hyvin spesifi nimi.)
 					</p>
 				</section>
+
+				
+				<!--           -->
+				<!-- Tehtävä 1 -->
+				<!--           -->
 
 				<section>
 					<h3>Tehtävä 1</h3>
@@ -313,8 +330,8 @@ let z = if x > y then x else y
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
 -- Huom tyyppimäärittely ei ole pakollinen, mutta tyypit ovat! 
--- Haskell (yleensä) osaa päätellä käytetyt tyypi ja täydentää ne itsekseen 
--- näissä harjoituksissa tyypit on dokumentoinnin vuoksi yleensä kirjoitettu esiin 
+-- Haskell (yleensä) osaa päätellä käytetyt tyypit ja täydentää ne itse 
+-- näissä kalvoissa tyypit on yleensä kirjoitettu esiin 
 -- add1 :: [Integer] -> [Integer]
 add1 []       = []
 add1 (x : xs) = x+1 : add1 xs
@@ -339,7 +356,7 @@ add1 (x : xs) = x+1 : add1 xs
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
 double :: [Integer] -> [Integer]
-double     [] = []
+double []     = []
 double x : xs = 2*x : double xs
 
 lens :: [String] -> [Integer]
@@ -347,8 +364,11 @@ lens []       = []
 lens (s : ss) = length s : lens ss
 					</code></pre>
 					<p>
-						Toteuta funktio <b>map</b>, joka abstrahoi kaiken muun paitsi eroavan osuuden.
+						Toteuta funktio <b>map'</b>, joka abstrahoi kaiken muun paitsi eroavan osuuden.
 					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+map' :: (a -> b) -> [a] -> [b]
+					</code></pre>
 				</section>
 
 				<section>
@@ -373,6 +393,11 @@ let rec map' xs f =
 				</section>
 
 
+
+
+				<!--           -->
+				<!-- Tehtävä 2 -->
+				<!--           -->
 
 				<section>
 					<h3>Tehtävä 2</h3>
@@ -402,7 +427,7 @@ alle5 (x : xs) = if x < 5 then x : alle5 xs else alle5 xs
 						Taas ovat melko samanlaista keskenään.
 					</p>
 
-					<pre><code class="scala" data-trim contenteditable>
+					<pre><code class="haskell" data-trim contenteditable>
 parilliset [] = []
 parilliset (x : xs) = if even x then x : parilliset xs else parilliset xs
 
@@ -413,6 +438,9 @@ posFst ((a, b) : xs) = if a > 0 then a : posFst xs else posFst xs
 						Toteuta korkeamman kertaluvun funktio <b>filter</b> joka
 						abstrahoi edelliset.
 					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+filter :: (a -> Bool) -> [a] -> [a]
+					</code></pre>
 				</section>
 
 				<section>
@@ -431,7 +459,6 @@ def parillisetIndeksit(l: List[Int]) : List[Int] = {
 	pi(l, 0)
 }
 					</code></pre>
-
 					<pre><code class="f#" data-trim contenteditable>
 let parillisetIndeksit xs =
   [for (x,i) in List.zip xs [0 .. List.length xs] do
@@ -441,13 +468,6 @@ let parillisetIndeksit xs =
 
 				<section>
 					<h3>Tehtävä 2: Ratkaisu</h3>
-					<pre><code class="scala" data-trim contenteditable>
-def filter[T](l: List[T], f: T => Boolean) : List[T] = l match {
-  case Nil            => Nil
-  case h :: t if f(h) => h :: filter(t, f)
-  case _ :: t         => filter(t, f)
-}
-					</code></pre>
 					<pre><code class="haskell" data-trim contenteditable>
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
@@ -456,6 +476,13 @@ filter' f (x : xs)
   | otherwise = filter' f xs
 
 filter'' f xs = [x | x <- xs, f x]
+					</code></pre>
+					<pre><code class="scala" data-trim contenteditable>
+def filter[T](l: List[T], f: T => Boolean) : List[T] = l match {
+  case Nil            => Nil
+  case h :: t if f(h) => h :: filter(t, f)
+  case _ :: t         => filter(t, f)
+}
 					</code></pre>
 					<pre><code class="f#" data-trim contenteditable>
 let rec filter f xs =
@@ -470,33 +497,100 @@ let filter' f xs = [for x in xs do if f x then yield x]
 
 
 
+				<!--           -->
+				<!-- Tehtävä 3 -->
+				<!--           -->
+
 				<section>
 					<h3>Tehtävä 3</h3>
+					<p>
+						TODO: flatten ennen tätä?
+					</p>
+					<p>
+						Halutaan muuttaa listan sisältöä, mutta tarjolla on vain funktio, mikä tuottaa uusia listoja. [[]]-rakenteen käsittely ei ole erityisen näppärää, joten tätä varten tarvitaan uusi kombinaattori. 
+					</p>
+					<p>
+						Funktio, joka purkaa parit siten, että ensimmäinen alkio kertoo montako alkiota tarvitaan ja toinen on alkio jota toistetaaan.
+					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+monista :: [(Int, a)] -> [a]
+monista []                 = []
+monista ((montako, x) : t) = replicate montako x ++ monista t
+					</code></pre>
+				</section>
+				<section>
+					<h3>Tehtävä 3</h3>
+					<ol>
+						<li>funktio mikä monistaa kokonaisuluvun itsensä kertaa listalle</li>
+					</ol>
+					<pre><code class="haskell" data-trim contenteditable>
+toista :: [Int] -> [a]
+					</code></pre>
+				</section>
+				<section>
+					<h3>Tehtävä 3</h3>
+					<pre><code class="haskell" data-trim contenteditable>
+toista :: [Int] -> [Int]
+toista []      = []
+toista (h : t) = replicate h h ++ toista t
+					</code></pre>
+					<p>
+						Miksi tässä ei voi käyttää map:ia?
+					</p>
+				</section>
+				<section>
+					<h3>Tehtävä 3</h3>
+					<p>
+						Toteuta korkeamman kertaluvun funktion <b>flatmap</b> joka abstrahoi edelliset
+					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+flatmap :: (a -> [b]) -> [a] -> [b]
+					</code></pre>
+				</section>
+				<section>
+					<h3>Tehtävä 3 - Ratkaisu</h3>
+					<pre><code class="haskell" data-trim contenteditable>
+flatmap :: (a -> [b]) -> [a] -> [b]
+flatmap _ []       = []
+flatmap f (a : as) = f a ++ flatmap f as
+					</code></pre>
+					<pre><code class="f#" data-trim contenteditable>
+let rec map f l = 
+    match l with
+    | []       -> []
+    | (h :: t) -> f h :: map f t
+
+let rec flatten l =
+    match l with
+    | [] -> []
+    | (h :: t) -> h @ (flatten t)
+
+let flatmap f l = map f l |> flatten
+					</code></pre>
+				</section>
+
+
+
+
+
+
+
+
+				<section>
+					<h3>Tehtävä 4</h3>
 					<p>
 						Halutaan redusoida lista yhdeksi arvoksi. Esimerkiksi listan kaikkien
 						alkioiden summa?
 					</p>
-					<pre><code class="scala" data-trim contenteditable>
-def sum(l: List[Int]) : Int = l match {
-  case Nil    => 0
-  case h :: t => h + sum(t)
-}
-					</code></pre>
 					<pre><code class="haskell" data-trim contenteditable>
 sum' :: [Integer] -> Integer
 sum' []      = 0
 sum' (h : t) = h + (sum t)
 					</code></pre>
-					<pre><code class="f#" data-trim contenteditable>
-let rec sum xs =
-    match xs with
-    | []    -> 0
-    | y::ys -> y + sum ys
-					</code></pre>
 				</section>
 
 				<section>
-					<h3>Tehtävä 3</h3>
+					<h3>Tehtävä 4</h3>
 					<ol>
 						<li>Kaikkien alkioiden tulo</li>
 						<li>Kaikki alkiot (merkkijonot) katenoituna yhteen merkkijonoon</li>
@@ -504,106 +598,39 @@ let rec sum xs =
 				</section>
 
 				<section>
-					<h3>Tehtävä 3</h3>
+					<h3>Tehtävä 4</h3>
 					<p>
 						Käytännössä sama koodi kaikissa! Mitä eroja niissä on?
 					</p>
-					<pre><code class="scala" data-trim contenteditable>
-def sum(l: List[Int]) : Int = l match {
-  case Nil    => 0
-  case h :: t => h + sum(t)
-}
-
-def product(l: List[Int]) : Int = l match {
-  case Nil    => 1
-  case h :: t => h * product(t)
-}
-
-def cat(l: List[String]) : String = l match {
-  case Nil    => ""
-  case h :: t => h ++ cat(t)
-}
-					</code></pre>
-					<p>
-						Toteuta funktio reduce, joka abstrahoi kaiken muun paitsi eroavan osuuden.
-					</p>
-				</section>
-
-				<section>
-					<h3>Tehtävä 3: Ratkaisu</h3>
-					<pre><code class="scala" data-trim contenteditable>
-def reduce[T](l: List[T], z: T)(f: (T, T) => T) : T = l match {
-  case Nil    => z
-  case h :: t => f(h, reduce(t, z)(f))
-}
-					</code></pre>
 					<pre><code class="haskell" data-trim contenteditable>
-reduce :: (a -> a -> a) -> a -> [a] -> a
-reduce f z []      = z
-reduce f z (h : t) = f h (reduce f z t)
+summa []       = 0
+summa (x : xs) = x + summa xs
+
+tulo []       = 1
+tulo (x : xs) = x * tulo xs
+
+cat []       = ""
+cat (s : ss) = s ++ cat ss
 					</code></pre>
-					<pre><code class="f#" data-trim contenteditable>
-let rec reduce' f z xs =
-    match xs with
-    | []      -> z
-    | y :: ys -> f y (reduce' f z ys)
-					</code></pre>
-				</section>
-
-
-
-				<section>
-					<h3>Tehtävä 4</h3>
 					<p>
-						Itseasiassa nämä kolmekin ovat selvästi samanlaisia.
+						Toteuta funktio <b>fold</b>, joka abstrahoi kaiken muun paitsi eroavan osuuden.
 					</p>
-					<pre><code class="scala" data-trim contenteditable>
-def reduce[T](l: List[T], f: (T, T) => T, z: T) : T = l match {
-	case Nil    => z
-	case h :: t => f(h, reduce(t, f, z))
-}
-
-def map[T,V](l: List[T], f: T => V) : List[V] = l match {
-	case Nil    => Nil
-	case h :: t => f(h) :: map(t, f)
-}
-
-def filter[T](l: List[T], f: T => Boolean) : List[T] = l match {
-	case Nil    => Nil
-	case h :: t => if f(h) h :: filter(t, f) else filter(t, f)
-}
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>Tehtävä 4</h3>
-					<p>
-						Toteuta rekursiivinen funktio fold, joka yhdistää reducen, mapin ja filterin.
-					</p>
-					<pre><code class="scala" data-trim contenteditable>
-def fold[T, V](l: List[T], f: (T, V) => V, z: V) : V = ???
-					</code></pre>
 					<pre><code class="haskell" data-trim contenteditable>
-fold :: [a] -> (a -> b -> b) -> b -> b
-					</code></pre>
-					<pre><code class="f#" data-trim contenteditable>
-let rec fold (l : 'a list) (f : 'a -> 'b -> 'b) (z : 'b) =
-	failwith "Not implemented"
+fold :: (a -> b -> b) -> b -> [a] -> b
 					</code></pre>
 				</section>
-
 				<section>
 					<h3>Tehtävä 4: Ratkaisu</h3>
+					<pre><code class="haskell" data-trim contenteditable>
+fold :: [a] -> (a -> b -> b) -> b -> b
+fold [] _ z       = z
+fold (x : xs) f z = f x (fold xs f z)
+					</code></pre>
 					<pre><code class="scala" data-trim contenteditable>
 def fold[T, V](l: List[T], f: (T, V) => V, z: V) : V = l match {
   case Nil    => z
   case h :: t => f(h, fold(t, f, z))
 }
-					</code></pre>
-					<pre><code class="haskell" data-trim contenteditable>
-fold :: [a] -> (a -> b -> b) -> b -> b
-fold [] _ z       = z
-fold (x : xs) f z = f x (fold xs f z)
 					</code></pre>
 					<pre><code class="f#" data-trim contenteditable>
 let rec fold l f z =
@@ -617,66 +644,68 @@ let rec fold l f z =
 					</p>
 				</section>
 
-				<section>
-					<h3>Fold, huomiot</h3>
-					<blockquote>fold on listan rekursion yleistys!</blockquote>
-					<p>
-						Oikeastaan mappiä, filteriä jne ei tarvittaisi kunhan fold on saatavilla. Tosin
-						on paljon mukavampi kirjoittaa <code>map (+1) lista</code> kuin vastaava foldilla
-						<!-- <code>foldr (\x acc -> x + 1 : acc) [] lista</code> -->
-					</p>
-				</section>
+
+
 
 				<section>
 					<h3>Tehtävä 5</h3>
+					<p>
+						Itseasiassa nämä kolmekin ovat selvästi samanlaisia.
+					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+map' :: (a -> b) -> [a] -> [b]
+map' _ []       = []
+map' f (x : xs) = f x : map' f xs
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x : xs) = if f x then x : filter f xs else filter f xs
+
+flatmap :: (a -> [b]) -> [a] -> [b]
+flatmap _ []       = []
+flatmap f (a : as) = f a ++ flatmap f as
+					</code></pre>
+				</section>
+				
+				<section>
+					<h3>Tehtävä 5</h3>
 					<ol>
-						<li>Toteuta reduce käyttäen foldia</li>
 						<li>Toteuta map käyttäen foldia</li>
 						<li>Toteuta filter käyttäen foldia</li>
+						<li>Toteuta flatmap käyttäen foldia</li>
 					</ol>
 				</section>
 
 				<section>
-					<h3>Tehtävä 5: Ratkaisu, Scala</h3>
-					<pre><code class="scala" data-trim contenteditable>
-def reducef[T](l: List[T])(f: (T, T) => T) =
-  fold(l.tail, l.head)(f)
-
-def mapf[T, V](l: List[T])(f: T => V) =
-  fold(l, List[V]()) { (v, l) => f(v) :: l }
-
-def filterf[T](l: List[T])(f: T => Boolean) =
-  fold(l, List[T]()) { (v, l) =>
-    if (f(v)) v :: l else l
-  }
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>Tehtävä 5: Ratkaisu, Haskell</h3>
-					<pre><code class="scala" data-trim contenteditable>
+					<h3>Tehtävä 5: Ratkaisu</h3>
+					<pre><code class="haskell" data-trim contenteditable>
 mapf :: (a -> b) -> [a] -> [b]
-mapf f xs = foldr' (\x acc -> f x : acc) ([] :: [b]) xs
-
-reducef :: (a -> a -> a) -> [a] -> a
-reducef f (x : xs) = foldr' f x xs
+mapf f xs = fold (\x acc -> f x : acc) ([] :: [b]) xs
 
 filterf :: (a -> Bool) -> [a] -> [a]
-filterf f xs = foldr' lf ([] :: [a]) xs where
+filterf f xs = fold lf ([] :: [a]) xs where
   lf x acc
     | f x       = x : acc
     | otherwise = acc
+
+filterf' :: (a -> Bool) -> [a] -> [a]
+filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
+
+flatmapf :: (a -> [b]) -> [a] -> [b]
+flatmapf f l = fold (\a acc -> f a ++ acc) [] l
 					</code></pre>
 				</section>
 
 				<section>
-					<h3>
-						Bonustehtävät:
-					</h3>
-					<ol>
-						<li>IBAN-numeron validointi</li>
-						<li>Viitenumeron tarkastussumman laskenta</li>
-					</ol>
+					<h3>Fold</h3>
+					<p>
+						Foldilla voidaan siis toteuttaa kaikki aiemmin opitut funktiot map, filter ja flatmap. 
+						Eli fold on ilmaisuvoimaltaan suurempi kuin muut, tämä ilmaisuvoima ei toki tule ilman hintaa,
+						fold on monimutkaisempi kuin aiemmin opitut funktiot. 
+					</p>
+					<blockquote>
+						Fold on siis listan rekursiivisen läpikäynnin yleistys!
+					</blockquote>
 				</section>
 
 				<section>
@@ -698,7 +727,7 @@ filterf f xs = foldr' lf ([] :: [a]) xs where
 				<section>
 					<h3>Kotitehtäviä</h3>
 					<ol>
-						<li>Kalvot: <a href="https://github.com/aheiska/shf">https://github.com/aheiska/shf</a></li>
+						<li>Kalvot: <a href="https://github.com/aheiska/haskelldojo">https://github.com/aheiska/haskelldojo</a></li>
 						<li><a href="http://aperiodic.net/phil/scala/s-99/">99 ongelmaa</a></li>
 						<li><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good!</a></li>
 					</ol>
