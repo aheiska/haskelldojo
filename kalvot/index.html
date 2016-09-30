@@ -312,8 +312,10 @@ let z = if x > y then x else y
 						Samoin on tarkoitus huomata, että vaikka Haskell ja FP-maailma vilisee pelottavia termejä kuten Monadi,
 						Monoidi, CoFree, FixPoint, Yoneda, Applicative, Functor, Semigroup, Currying, Partial Application jne ei
 						kaikkea tarvitse tietää heti vaan ohjelmoinnin 
-						voi aloittaa ihan perusteista. (Yleensä hienon nimen takana on aika yksinkertainen asia, jolle on vain
-						annettu hyvin spesifi nimi.)
+						voi aloittaa ihan perusteista.
+					</p>
+					<p>
+						<small>(Yleensä hienon nimen takana on aika hyvin spesifi yksinkertainen asia, jolle on vain annettu hyvin spesifi nimi. vrt OO:n suunnittelumallit)</small>
 					</p>
 				</section>
 
@@ -352,7 +354,7 @@ add1 (x : xs) = x+1 : add1 xs
 				<section>
 					<h3>Tehtävä 1</h3>
 					<p>
-						Käytännössä sama koodi kaikissa! Mitä eroja niissä on?
+						Käytännössä sama koodi molemmissa! Mitä eroja niissä on?
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
 double :: [Integer] -> [Integer]
@@ -504,7 +506,7 @@ let filter' f xs = [for x in xs do if f x then yield x]
 				<section>
 					<h3>Tehtävä 3</h3>
 					<p>
-						TODO: flatten ennen tätä?
+						<big><i><b>TODO: flatten ennen tätä?</b></i></big>
 					</p>
 					<p>
 						Halutaan muuttaa listan sisältöä, mutta tarjolla on vain funktio, mikä tuottaa uusia listoja. [[]]-rakenteen käsittely ei ole erityisen näppärää, joten tätä varten tarvitaan uusi kombinaattori. 
@@ -524,7 +526,7 @@ monista ((montako, x) : t) = replicate montako x ++ monista t
 						<li>funktio mikä monistaa kokonaisuluvun itsensä kertaa listalle</li>
 					</ol>
 					<pre><code class="haskell" data-trim contenteditable>
-toista :: [Int] -> [a]
+toista :: [Int] -> [Int]
 					</code></pre>
 				</section>
 				<section>
@@ -535,13 +537,16 @@ toista []      = []
 toista (h : t) = replicate h h ++ toista t
 					</code></pre>
 					<p>
-						Miksi tässä ei voi käyttää map:ia?
+						Miksi tämä ei toimi?
 					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+toista is = map (\i -> replicate i i) is
+					</code></pre>
 				</section>
 				<section>
 					<h3>Tehtävä 3</h3>
 					<p>
-						Toteuta korkeamman kertaluvun funktion <b>flatmap</b> joka abstrahoi edelliset
+						Toteuta korkeamman kertaluvun funktio <b>flatmap</b> joka abstrahoi edelliset
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
 flatmap :: (a -> [b]) -> [a] -> [b]
@@ -658,7 +663,7 @@ map' _ []       = []
 map' f (x : xs) = f x : map' f xs
 
 filter' :: (a -> Bool) -> [a] -> [a]
-filter' _ [] = []
+filter' _ []      = []
 filter' f (x : xs) = if f x then x : filter f xs else filter f xs
 
 flatmap :: (a -> [b]) -> [a] -> [b]

@@ -55,6 +55,8 @@ toista :: [Int] -> [Int]
 toista []      = []
 toista (h : t) = replicate h h ++ toista t
 
+-- toista is = map (\i -> replicate i i) is
+
 flatmap :: (a -> [b]) -> [a] -> [b]
 flatmap _ []       = []
 flatmap f (a : as) = f a ++ flatmap f as
