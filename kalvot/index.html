@@ -633,11 +633,16 @@ flatmapf f l = fold (\a acc -> f a ++ acc) [] l
 					<h3>Fold</h3>
 					<p>
 						Foldilla voidaan siis toteuttaa kaikki aiemmin opitut funktiot map, filter ja flatmap.
-						Eli fold on ilmaisuvoimaltaan suurempi kuin muut, tämä ilmaisuvoima ei toki tule ilman hintaa,
+						Fold on siis ilmaisuvoimaltaan suurempi kuin muut, tämä ilmaisuvoima ei tule ilmaiseksi,
 						fold on monimutkaisempi kuin aiemmin opitut funktiot.
 					</p>
+					<p>
+						<b>Fold on siis listan rekursiivisen läpikäynnin yleistys!</b>
+					</bp>
 					<blockquote>
-						Fold on siis listan rekursiivisen läpikäynnin yleistys!
+						“The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.”
+						<br />
+						~ Edsger Dijkstra
 					</blockquote>
 				</section>
 
