@@ -120,4 +120,11 @@ filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
 flatmapf :: (a -> [b]) -> [a] -> [b]
 flatmapf f l = fold (\a acc -> f a ++ acc) [] l
 
-reverse = foldl (flip (:)) []
+
+f :: (Integer, String, [Integer]) -> String
+f (1, s, _)  = "yksi plus " ++ s
+f (_, _, []) = "tyhjä lista"
+f _          = "muu tapaus"
+
+reverse' :: [a] -> [a]
+reverse' = foldl (flip (:)) []

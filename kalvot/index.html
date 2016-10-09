@@ -277,7 +277,7 @@ eka = fst (42, "sd")  -- eka == 42
 toka = snd (42, "sd") -- toka == "sd"
 
 -- yleensä tuplea ei tarvise purkaa käsin; hahmontunnistus 
-f :: (Integer, String [Integer]) -> String
+f :: (Integer, String, [Integer]) -> String
 f (1, s, _)  = "yksi plus " ++ s
 f (_, _, []) = "tyhjä lista"
 f _          = "muu tapaus"
