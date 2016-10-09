@@ -244,7 +244,7 @@ let z = if x > y then x else y
 					<h4>Teoriaa: Muuta Haskellista</h4>
 					<pre><code class="haskell" data-trim contenteditable>
 -- Tuple
-let pari = (1, 2)
+let pari = (1, "kaksi")
 eka (f, s) = f
 toka (f, s) = s
 
@@ -252,23 +252,15 @@ toka (f, s) = s
 let pituus = length xs
 let kahdeksanYkkosta = replicate 8 1
 
-					</code></pre>
-				</section>
+-- listan hahmontunnistus
+head (h : _) = t
 
-				<section>
-					<h4>Ennen tehtäviä</h4>
-					<p>
-						Tällä kertaa tehtävien tarkoitus on tutustuttaa tekijä korkeamman kertaluvun funktioihin "keksimällä ne itse".
-					</p>
-					<p>
-						Samoin on tarkoitus huomata, että vaikka Haskell ja FP-maailma vilisee pelottavia termejä kuten Monadi,
-						Monoidi, CoFree, FixPoint, Yoneda, Applicative, Functor, Semigroup, Currying, Partial Application jne ei
-						kaikkea tarvitse tietää heti vaan ohjelmoinnin
-						voi aloittaa ihan perusteista.
-					</p>
-					<p>
-						<small>(Yleensä hienon nimen takana on aika hyvin spesifi yksinkertainen asia, jolle on vain annettu hyvin spesifi nimi. vrt OO:n suunnittelumallit)</small>
-					</p>
+-- listojen / stringien yhdistäminen
+let heiMaailma = "Hello" ++ " Worl" ++ ['d', '!']
+
+-- if
+isompi x y = if x > y then x else y
+					</code></pre>
 				</section>
 
 				<section>
@@ -291,6 +283,24 @@ f (_, _, []) = "tyhjä lista"
 f _          = "muu tapaus"
 					</code></pre>					
 				</section>
+
+				<section>
+					<h4>Ennen tehtäviä</h4>
+					<p>
+						Tällä kertaa tehtävien tarkoitus on tutustuttaa tekijä korkeamman kertaluvun funktioihin "keksimällä ne itse". Samalla tutustutaan Haskelliin juuri sen verran, että saamme sillä tehtävät tehdyksi.
+						<!-- Haskellissa on syntaksia itseasiassa todella vähän. -->
+					</p>
+					<p>
+						Samoin on tarkoitus huomata, että vaikka Haskell ja FP-maailma vilisee pelottavia termejä kuten Monadi,
+						Monoidi, CoFree, FixPoint, Yoneda, Applicative, Functor, Semigroup, Currying, Partial Application jne ei
+						kaikkea tarvitse tietää heti vaan ohjelmoinnin
+						voi aloittaa ihan perusteista.
+					</p>
+					<p>
+						<small>(Yleensä hienon nimen takana on aika hyvin spesifi yksinkertainen asia, jolle on vain annettu hyvin spesifi nimi. vrt OO:n suunnittelumallit)</small>
+					</p>
+				</section>
+
 
 				<!--           -->
 				<!-- Tehtävä 1 -->
@@ -488,7 +498,22 @@ flatmap' _ []       = []
 flatmap' f (a : as) = f a ++ flatmap' f as
 					</code></pre>
 				</section>
+				<section>
+					<h3>Tehtävä 3 - Bonusratkaisu</h3>
+					<p>
+						Toteutetaan funktio flatmap'' käyttäen funktiota flatten ja funtkiota map.
+					</p>
+					<pre><code class="haskell" data-trim contenteditable>
+flatten :: [[a]] -> [a]
+flatten []       = []
+flatten (l : ls) = l ++ flatten ls
 
+flatmap'' :: (a -> [b]) -> [a] -> [b]
+flatmap'' f l = flatten $ map f l
+					</code></pre>
+					<p>
+					</p>
+				</section>
 
 
 

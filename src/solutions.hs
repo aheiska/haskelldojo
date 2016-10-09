@@ -119,3 +119,5 @@ filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
 
 flatmapf :: (a -> [b]) -> [a] -> [b]
 flatmapf f l = fold (\a acc -> f a ++ acc) [] l
+
+reverse = foldl (flip (:)) []
