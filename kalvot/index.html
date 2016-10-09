@@ -241,6 +241,21 @@ let z = if x > y then x else y
 				</section>
 
 				<section>
+					<h4>Teoriaa: Muuta Haskellista</h4>
+					<pre><code class="haskell" data-trim contenteditable>
+-- Tuple
+let pari = (1, 2)
+eka (f, s) = f
+toka (f, s) = s
+
+-- Funktioita
+let pituus = length xs
+let kahdeksanYkkosta = replicate 8 1
+
+					</code></pre>
+				</section>
+
+				<section>
 					<h4>Ennen tehtäviä</h4>
 					<p>
 						Tällä kertaa tehtävien tarkoitus on tutustuttaa tekijä korkeamman kertaluvun funktioihin "keksimällä ne itse".
@@ -398,9 +413,6 @@ filter'' f xs = [x | x <- xs, f x]
 
 				<section>
 					<h3>Tehtävä 3</h3>
-					<p>
-						<big><i><b>TODO: flatten ennen tätä?</b></i></big>
-					</p>
 					<p>
 						Halutaan muuttaa listan sisältöä, mutta tarjolla on vain funktio,
 						mikä tuottaa uusia listoja. [[]]-rakenteen käsittely ei ole erityisen näppärää,
