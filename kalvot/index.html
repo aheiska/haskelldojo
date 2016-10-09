@@ -613,16 +613,16 @@ flatmap' f (a : as) = f a ++ flatmap' f as
 					<h3>Tehtävä 5: Ratkaisu</h3>
 					<pre><code class="haskell" data-trim contenteditable>
 mapf :: (a -> b) -> [a] -> [b]
-mapf f xs = fold (\x acc -> f x : acc) ([] :: [b]) xs
+mapf f xs = fold (\x acc -> f x : acc) [] xs
 
 filterf :: (a -> Bool) -> [a] -> [a]
-filterf f xs = fold lf ([] :: [a]) xs where
+filterf f xs = fold lf [] xs where
   lf x acc
     | f x       = x : acc
     | otherwise = acc
 
 filterf' :: (a -> Bool) -> [a] -> [a]
-filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
+filterf' f as = fold (\x acc -> if f x then x : acc else acc) [] as
 
 flatmapf :: (a -> [b]) -> [a] -> [b]
 flatmapf f l = fold (\a acc -> f a ++ acc) [] l

@@ -103,19 +103,20 @@ fold f z (a : as) = f a (fold f z as)
 --------------------------------
 
 mapf :: (a -> b) -> [a] -> [b]
-mapf f xs = fold (\x acc -> f x : acc) ([] :: [b]) xs
+mapf f xs = fold (\x acc -> f x : acc) [] xs
 
 reducef :: (a -> a -> a) -> [a] -> a
 reducef f (x : xs) = fold f x xs
 
 filterf :: (a -> Bool) -> [a] -> [a]
-filterf f xs = fold lf ([] :: [a]) xs where
+filterf f xs = fold lf [] xs where
   lf x acc
     | f x       = x : acc
     | otherwise = acc
 
 filterf' :: (a -> Bool) -> [a] -> [a]
-filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
+--filterf' f as = fold (\x acc -> (if f x then [x] else []) ++ acc) [] as
+filterf' f as = fold (\x acc -> if f x then x : acc else acc) [] as
 
 flatmapf :: (a -> [b]) -> [a] -> [b]
 flatmapf f l = fold (\a acc -> f a ++ acc) [] l
