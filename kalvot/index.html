@@ -89,7 +89,7 @@
 					<h2>Teoriaa: Funktionaalisen ja imperatiivisen ero</h2>
 					<p>
 						Funktionaalisessa ohjelmoinnissa funktiot ovat ensimmäisen luokan kansalaisia.
-						Erityisen oleellisia ovat korkeamman kertaluokan funktiot; funktiot, jotka ottavat funktion parametrina.
+						Erityisen oleellisia ovat korkeamman kertaluvun funktiot; funktiot, jotka ottavat funktion parametrina.
 						Tai palauttavat uuden funktion. Tai molempia.
 					</p>
 					<p>
@@ -148,7 +148,7 @@
 						Funktioita voidaan ohjelmakoodissa käsitellä kuten dataa. Niitä voidaan
 						välittää parametreina, palauttaa funktioista ja sijoittaa muuttujiin kuten arvojakin.
 					</p>
-			  </section>
+				</section>
 
 				<section>
 					<h2>Funktiot ensimmäisen luokan kansalaisina</h2>
@@ -170,7 +170,7 @@ laske oper l r = oper l r
 
 				<section>
 					<h3>Teoriaa: Lambdat koodissa</h3>
-					<pre><code data-trim contenteditable>
+					<pre><code class="haskell" data-trim contenteditable>
 x = 2
 laske (\l r -> x * l + r) 3 5
 					</code></pre>
@@ -271,6 +271,26 @@ let kahdeksanYkkosta = replicate 8 1
 					</p>
 				</section>
 
+				<section>
+					<h4>Syntax cheat sheet</h4>
+					<pre><code class="haskell" data-trim contenteditable>
+-- int add1(int x, int y) // C:n sukuisesti 
+add :: Integer -> Integer -> Integer
+add x y = x + y
+
+-- tuple on muuttumaton n arvoa yhdistävä rakenne
+t = (1, "s", [1]) -- (Integer, String, [Integer])
+
+eka = fst (42, "sd")  -- eka == 42
+toka = snd (42, "sd") -- toka == "sd"
+
+-- yleensä tuplea ei tarvise purkaa käsin; hahmontunnistus 
+f :: (Integer, String [Integer]) -> String
+f (1, s, _)  = "yksi plus " ++ s
+f (_, _, []) = "tyhjä lista"
+f _          = "muu tapaus"
+					</code></pre>					
+				</section>
 
 				<!--           -->
 				<!-- Tehtävä 1 -->
