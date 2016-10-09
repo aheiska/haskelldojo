@@ -567,9 +567,9 @@ fold :: (a -> b -> b) -> b -> [a] -> b
 				<section>
 					<h3>Tehtävä 4: Ratkaisu</h3>
 					<pre><code class="haskell" data-trim contenteditable>
-fold :: [a] -> (a -> b -> b) -> b -> b
-fold [] _ z       = z
-fold (x : xs) f z = f x (fold xs f z)
+fold :: (a -> b -> b) -> b -> [a] -> b
+fold f z []       = z
+fold f z (a : as) = f a (fold f z as)
 					</code></pre>
 					<p>
 						Nämä ovat oikeasti funktio nimeltään fold right.
