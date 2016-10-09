@@ -66,9 +66,15 @@ flatten :: [[a]] -> [a]
 flatten []       = []
 flatten (l : ls) = l ++ flatten ls
 
+(|>) x y = y x
+
 flatmap' :: (a -> [b]) -> [a] -> [b]
-flatmap' f l = flatten (map' f l)
+-- flatmap' f l = flatten (map' f l)
 -- flatmap' f = flatten.(map' f)
+flatmap' f l = map f l |> flatten
+
+flatmap'' :: (a -> [b]) -> [a] -> [b]
+flatmap'' f l = flatten $ map f l
 
 -- saisko |> :n jotenkin kalvoille :)
 -- f#: List.map f |> List.flatten
