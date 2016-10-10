@@ -103,8 +103,8 @@
 				<section>
 					<h2>Teoriaa: Funktionaalisen ja imperatiivisen ero</h2>
 					<p>
-						Funktionaalisella ohjelmointikiellä kirjoitetulle ohjelmalle on tyypillistä sen deklaratiivisyys.
-						Ohjelma kertoo siis tietokoneelle ennemminkin "mitä tehdään" (fp) kuin "miten tehdään" (imperatiivinen).
+						Funktionaalisella ohjelmointikiellä kirjoitetulle ohjelmalle on tyypillistä sen deklaratiivisuus.
+						Ohjelma kertoo siis tietokoneelle ennemminkin "mitä tehdään" (funktionaalinen) kuin "miten tehdään" (imperatiivinen).
 						Ero saattaa tässä vaiheessa tuntua pieneltä, merkityksettömältä tai vaikealta ymmärtää, mutta paradigman
 						kauneus aukeaa vähitellen (tuskin kylläkään tämän dojon aikana).
 					</p>
@@ -116,7 +116,7 @@
 					<h2>Miksi Haskell?</h2>
 					<p>
 						Haskell on nykyisistä funktionaalisista ohjelmointikielistä yksi
-						eniten käytetyistä ja vahvimmin tyypitetyistä. Lisäksi on haskell on puhdas,
+						eniten käytetyistä ja vahvimmin tyypitetyistä. Lisäksi on Haskell on puhdas,
 						eikä salli sivuvaikutuksia.
 					</p>
 					<p>
@@ -125,20 +125,20 @@
 						nopeampi kuin käsin kirjoitettu C tai C++.
 					</p>
 					<p>
-						Tässä dojossa emme kuitenkaan käännä ohjelmiamme binääriksi vaan käytänne haskell tulkkia <code>ghci</code>.
+						Tässä dojossa emme kuitenkaan käännä ohjelmiamme binääriksi vaan käytänne Haskell-tulkkia <code>ghci</code>.
 						<!-- eli REPL:iä (Read-Eval-Print-Loop) -->
 					</p>
 				</section>
 
 				<section>
-					<h2>Muita FP-kieliä</h2>
+					<h2>Muita funktionaalisia kieliä</h2>
 					<p>
-						FP-kieli itsessään on hieman ontuva termi. Kaikilla kielillä voi ohjelmoida funktionaalisesti. FP-kieliksi
+						Funktionaalinen kieli itsessään on hieman ontuva termi. Kaikilla kielillä voi ohjelmoida funktionaalisesti. Funktionaalisiksi kieliksi
 						tyypillisesti kuitenkin nimitetään sellaisia ohjelmointikieliä jotka tekevät funktionaalisen ohjelmoinnin
 						helpoksi, ja joiden kehitysprosessissa ja standardikirjastossa funktionaalisuus on ollut aina mukana.
 					</p>
 					<p>
-						Ocaml, Scala, F#, Erlang, Clojure, Scheme, SML, Frege, Idris, Purescript, Elm, Rust...
+						OCaml, Scala, F#, Erlang, Clojure, Scheme, Lisp, SML, Frege, Idris, PureScript, Elm, Rust...
 					</p>
 				</section>
 
@@ -162,8 +162,8 @@ laske oper l r = oper l r
 					<h2>Teoriaa: Lambda ja sulkeuma (closure)</h2>
 					<p>
 						Lambda on anonyymi funktio, joka annetaan esimerkiksi parametrina toiselle funktiolle.
-						Sulkeuma on lambda, joka voi viitata kontekstinsa muuttujiin. Käytännössä ohjelmointikieliä
-						joissa olisi lamdat mutta ei sulkeumia ei ole. Voidaan siis sanoa, että lambda on sulkeuma
+						Sulkeuma on lambda, joka voi viitata kontekstinsa muuttujiin. Käytännössä ohjelmointikieliä,
+						joissa olisi lambdat, mutta ei sulkeumia, ei ole. Voidaan siis sanoa, että lambda on sulkeuma
 						silloin kun se viittaa kontekstiinsa.
 					</p>
 				</section>
@@ -177,7 +177,7 @@ laske (\l r -> x * l + r) 3 5
 				</section>
 
 				<section>
-					<h2>Teoriaa: Immutable lista</h2>
+					<h2>Teoriaa: Immutable-lista</h2>
 					<p>
 						Muuttumaton (linkitetty) lista, joka koostuu rekursiivisesti
 						päästä (head) ja hännästä (tail). Pää on alkio ja häntä on uusi,
@@ -243,7 +243,7 @@ let z = if x > y then x else y
 				<section>
 					<h4>Teoriaa: Muuta Haskellista</h4>
 					<pre><code class="haskell" data-trim contenteditable>
--- Tuple
+-- Monikko (tuple)
 let pari = (1, "kaksi")
 eka (f, s) = f
 toka (f, s) = s
@@ -252,10 +252,10 @@ toka (f, s) = s
 let pituus = length xs
 let kahdeksanYkkosta = replicate 8 1
 
--- listan hahmontunnistus
-head (h : _) = t
+-- Listan hahmontunnistus
+head (h : _) = h
 
--- listojen / stringien yhdistäminen
+-- Listojen / stringien yhdistäminen
 let heiMaailma = "Hello" ++ " Worl" ++ ['d', '!']
 
 -- if
@@ -266,7 +266,7 @@ isompi x y = if x > y then x else y
 				<section>
 					<h4>Syntax cheat sheet</h4>
 					<pre><code class="haskell" data-trim contenteditable>
--- int add1(int x, int y) // C:n sukuisesti 
+-- int add1(int x, int y) // C:n sukuisesti
 add :: Integer -> Integer -> Integer
 add x y = x + y
 
@@ -276,24 +276,24 @@ t = (1, "s", [1]) -- (Integer, String, [Integer])
 eka = fst (42, "sd")  -- eka == 42
 toka = snd (42, "sd") -- toka == "sd"
 
--- yleensä tuplea ei tarvise purkaa käsin; hahmontunnistus 
+-- yleensä tuplea ei tarvise purkaa käsin; hahmontunnistus
 f :: (Integer, String, [Integer]) -> String
 f (1, s, _)  = "yksi plus " ++ s
 f (_, _, []) = "tyhjä lista"
 f _          = "muu tapaus"
-					</code></pre>					
+					</code></pre>
 				</section>
 
 				<section>
 					<h4>Ennen tehtäviä</h4>
 					<p>
-						Tällä kertaa tehtävien tarkoitus on tutustuttaa tekijä korkeamman kertaluvun funktioihin "keksimällä ne itse". Samalla tutustutaan Haskelliin juuri sen verran, että saamme sillä tehtävät tehdyksi.
+						Tällä kertaa tehtävien tarkoitus on tutustua korkeamman kertaluvun funktioihin "keksimällä ne itse". Samalla tutustutaan Haskelliin juuri sen verran, että saamme sillä tehtävät tehdyksi.
 						<!-- Haskellissa on syntaksia itseasiassa todella vähän. -->
 					</p>
 					<p>
-						Samoin on tarkoitus huomata, että vaikka Haskell ja FP-maailma vilisee pelottavia termejä kuten Monadi,
+						Samoin on tarkoitus huomata, että vaikka Haskell ja funktionaalinen maailma vilisee pelottavia termejä kuten Monadi,
 						Monoidi, CoFree, FixPoint, Yoneda, Applicative, Functor, Semigroup, Currying, Partial Application jne ei
-						kaikkea tarvitse tietää heti vaan ohjelmoinnin
+						kaikkea tarvitse tietää heti, vaan ohjelmoinnin
 						voi aloittaa ihan perusteista.
 					</p>
 					<p>
@@ -313,9 +313,9 @@ f _          = "muu tapaus"
 						jokaiseen listan alkioon yksi?
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
--- Huom tyyppimäärittely ei ole pakollinen, mutta tyypit ovat!
--- Haskell (yleensä) osaa päätellä käytetyt tyypit ja täydentää ne itse
--- näissä kalvoissa tyypit on yleensä kirjoitettu esiin
+-- Huom! Tyyppimäärittely ei ole pakollinen, mutta tyypit ovat!
+-- Haskell (yleensä) osaa päätellä käytetyt tyypit ja täydentää ne itse.
+-- Näissä kalvoissa tyypit on yleensä kirjoitettu esiin.
 -- add1 :: [Integer] -> [Integer]
 add1 []       = []
 add1 (x : xs) = x+1 : add1 xs
@@ -501,7 +501,7 @@ flatmap' f (a : as) = f a ++ flatmap' f as
 				<section>
 					<h3>Tehtävä 3 - Bonusratkaisu</h3>
 					<p>
-						Toteutetaan funktio flatmap'' käyttäen funktiota flatten ja funtkiota map.
+						Toteutetaan funktio flatmap'' käyttäen funktioita flatten ja map.
 					</p>
 					<pre><code class="haskell" data-trim contenteditable>
 flatten :: [[a]] -> [a]
@@ -514,13 +514,6 @@ flatmap'' f l = flatten $ map f l
 					<p>
 					</p>
 				</section>
-
-
-
-
-
-
-
 				<section>
 					<h3>Tehtävä 4</h3>
 					<p>
@@ -576,10 +569,6 @@ fold f z (a : as) = f a (fold f z as)
 						Eroon fold left funktion kanssa ei mennä tässä.
 					</p>
 				</section>
-
-
-
-
 				<section>
 					<h3>Tehtävä 5</h3>
 					<p>
@@ -633,7 +622,7 @@ flatmapf f l = fold (\a acc -> f a ++ acc) [] l
 					<h3>Fold</h3>
 					<p>
 						Foldilla voidaan siis toteuttaa kaikki aiemmin opitut funktiot map, filter ja flatmap.
-						Fold on siis ilmaisuvoimaltaan suurempi kuin muut, tämä ilmaisuvoima ei tule ilmaiseksi,
+						Fold on siis ilmaisuvoimaltaan suurempi kuin muut. Tämä ilmaisuvoima ei tule ilmaiseksi,
 						fold on monimutkaisempi kuin aiemmin opitut funktiot.
 					</p>
 					<p>
