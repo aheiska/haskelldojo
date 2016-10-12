@@ -23,7 +23,7 @@ alle5 (x : xs) = if x < 5 then x : alle5 xs else alle5 xs
 parilliset :: [Integer] -> [Integer]
 parilliset [] = []
 parilliset (x : xs) = if even x then x : rest else rest
-  where 
+  where
     rest = parilliset xs
 
 parilliset2 [] = []
@@ -70,7 +70,7 @@ flatten (l : ls) = l ++ flatten ls
 
 flatmap' :: (a -> [b]) -> [a] -> [b]
 -- flatmap' f l = flatten (map' f l)
--- flatmap' f = flatten.(map' f)
+-- flatmap' f = flatten . map' f
 flatmap' f l = map f l |> flatten
 
 flatmap'' :: (a -> [b]) -> [a] -> [b]
