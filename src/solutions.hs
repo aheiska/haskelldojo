@@ -39,9 +39,12 @@ evens (x : xs)
 posFst [] = []
 posFst ((a, b) : xs) = if a > 0 then a : posFst xs else posFst xs
 
+evenIndex'' :: [a] -> [a]
+evenIndex'' xs = [x | (x, i) <- zip xs [0..], even i]
+
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
-filter' f (x : xs) = if f x then x : filter f xs else filter f xs
+filter' f (x : xs) = if f x then x : filter' f xs else filter' f xs
 
 
 -- flatmap
@@ -97,6 +100,10 @@ cat (s : ss) = s ++ cat ss
 fold :: (a -> b -> b) -> b -> [a] -> b
 fold f z []       = z
 fold f z (a : as) = f a (fold f z as)
+
+foldl' :: (b -> a -> b) -> b -> [a] -> b
+foldl' _ z []       = z
+foldl' f z (a : as) = foldl' f (f z a) as
 
 
 -- mapf filterf flatmapf
