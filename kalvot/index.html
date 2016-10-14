@@ -343,7 +343,7 @@ add1 (x : xs) = x + 1 : add1 xs
 					<pre><code class="haskell" data-trim contenteditable>
 double :: [Integer] -> [Integer]
 double []     = []
-double x : xs = 2 * x : double xs
+double (x : xs) = 2*x : double xs
 
 lens :: [String] -> [Integer]
 lens []       = []
